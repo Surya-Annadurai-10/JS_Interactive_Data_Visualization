@@ -106,6 +106,12 @@
         });
       }
 
+      anime({ targets: myChart.data.datasets[0].metaData,
+         translateX: 100, 
+         duration: 3000, 
+         easing: 'easeInOutQuad'
+         });
+
       window.onload = () => {
         typeChart(country, populationArr, "bar");
       };
