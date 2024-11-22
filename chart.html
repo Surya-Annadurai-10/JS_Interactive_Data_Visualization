@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<style>
+
+
+
+  .canvas{
+    width: 50%;
+    /* background-color: yellow; */
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+
+margin: auto;
+  }
+</style>
+  </head>
+  <body>
+
+  
+
+
+   
+    
+    <div class ="canvas">
+    <canvas id = 'myChart'></canvas>
+  </div>
+    <script>
+
+let canvasDiv = document.querySelector(".canvas-div")
+
+      let country = [
+        "india",
+        "china",
+        "indonesia",
+        "pakistan",
+        "brazil",
+        "bangladesh",
+        "russia",
+        "japan",
+        "nigeria",
+        "germany",
+      ];
+      let populationArr = [];
+
+
+
+function initial(){
+   
+     country.forEach((value) => {
+       let pop =  name(value);
+      //  console.log(pop)
+      pop.then((data) =>{
+        console.log(data);
+        populationArr.push(data);
+      })
+      });
+     }
+initial();
+
+
+  setTimeout(()=>{
+  chart(country,populationArr)
+},1000);
+
+     
+
+
+      async function name(value) {
+        let promise = await fetch(
+          `https://restcountries.com/v3.1/name/${value}`
+        );
+
+        let response = await promise.json();
+        return response[0].population;
+      
+      //  populationArr.push( response[0].population);
+      //  console.log(populationArr);
+     
+      }
+
+
+function chart(country , population){
+  const ctx = document.getElementById('myChart');
+
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels:country,
+    datasets: [{
+      label: 'Population',
+      data: population,
+      borderWidth: 1,
+      borderColor:"#000",
+      backgroundColor :  ["green" , "brown" , "tomato" , "cyan" , "orange" , "purple" , "pink" , "lightgreen" , "darkblue" , "blue" ],
+      hoverBorderColor : "#ff000",
+      hoverBorderWidth : "1rem"
+    }]
+  },
+  options: {
+    
+    animation : true,
+    title: {
+        display: true,
+        text: 'World Wine Production 2018'
+      },
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+}
+
+
+window.onload = () =>{
+  typeChart(country , populationArr, "bar")
+}
+    </script>
+  </body>
+</html>
